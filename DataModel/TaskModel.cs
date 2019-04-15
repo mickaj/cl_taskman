@@ -105,14 +105,27 @@ namespace DataModel
             get => !EndDate.HasValue;
         }
 
+        /// <summary>
+        /// Sets up new all day task.
+        /// </summary>
+        /// <param name="description">Description string of a task.</param>
+        /// <param name="startDate">Start date of a task</param>
+        /// <param name="isImportant">Importance flag</param>
         public TaskModel(string description, DateTime startDate, bool isImportant = false)
         {
             InitializeProperties(description, startDate, null, isImportant);
         }
 
-        public TaskModel(string description, DateTime startDate, DateTime endDate, bool isImporant = false)
+        /// <summary>
+        /// Sets up new task with defined end date.
+        /// </summary>
+        /// <param name="description">Description string of a task.</param>
+        /// <param name="startDate">Start date of a task</param>
+        /// <param name="endDate">End date of a task</param>
+        /// <param name="isImportant">Importance flag</param>
+        public TaskModel(string description, DateTime startDate, DateTime endDate, bool isImportant = false)
         {
-            InitializeProperties(description, startDate, endDate, isImporant);
+            InitializeProperties(description, startDate, endDate, isImportant);
         }
 
         private void InitializeProperties(string description, DateTime startDate, DateTime? endDate, bool isImporant = false)
