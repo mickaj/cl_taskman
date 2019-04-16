@@ -57,8 +57,8 @@ namespace DataModel
                     }
                     if (EndDate < value)
                     {
-                        TimeSpan diff = EndDate.Value - value;
-                        EndDate = value + diff;
+                        TimeSpan diff = value - EndDate.Value;
+                        EndDate = value + diff - new TimeSpan(1, 0, 0, 0);
                         _startDate = value;
                     }
                 }
