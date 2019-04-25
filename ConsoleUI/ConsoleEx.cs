@@ -1,60 +1,49 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace ConsoleUI
 {
-    internal static class ConsoleEx
+    internal class ConsoleEx : IConsole
     {
-        private static Action<string> _writeAction = (string text) => Console.Write(text);
-        private static Action<string> _writeLineAction = (string text) => Console.WriteLine(text);
+        private Action<string> _writeAction = (string text) => Console.Write(text);
+        private Action<string> _writeLineAction = (string text) => Console.WriteLine(text);
 
-        internal static void Initialize()
+        internal ConsoleEx()
         {
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            Console.OutputEncoding = Encoding.UTF8;
         }
 
-        internal static void Write(string text, ConsoleColor color)
+        public void Write(string text)
+        {
+            Console.Write(text);
+        }
+        
+        public void Write(string text, ConsoleColor color)
         {
             OutputToConsole(text, color, _writeAction);
         }
 
-        internal static void WriteLine(string text, ConsoleColor color)
+        public void WriteLine(string text)
+        {
+            Console.WriteLine(text);
+        }
+
+        public void WriteLine(string text, ConsoleColor color)
         {
             OutputToConsole(text, color, _writeLineAction);
         }
 
-        internal static void DrawAppHeader()
-        {
-            WriteLine("**************************", ConsoleColor.Blue);
-            Write("**     ", ConsoleColor.Blue);
-            Write("TASK MANAGER", ConsoleColor.Red);
-            WriteLine("     **", ConsoleColor.Blue);
-            Write("**     ", ConsoleColor.Blue);
-            Write("Michał Kajzer", ConsoleColor.Green);
-            WriteLine("    **", ConsoleColor.Blue);
-            WriteLine("**************************", ConsoleColor.Blue);
-        }
-
-        internal static void PrintHelp()
-        {
-            WriteLine("Commands:", ConsoleColor.Blue);
-            Write("help", ConsoleColor.Green);
-            Write(" - display list of commands\n", ConsoleColor.Red);
-            Write("clear", ConsoleColor.Green);
-            Write(" - clear console\n", ConsoleColor.Red);
-            Write("exit", ConsoleColor.Green);
-            Write(" - quit application\n", ConsoleColor.Red);
-        }
-
-        internal static void ClearConsole()
+        public void ClearConsole()
         {
             Console.Clear();
-            DrawAppHeader();
-            PrintHelp();
         }
 
-        private static void OutputToConsole(string text, ConsoleColor color, Action<string> action)
+        public string ReadLine()
+        {
+            return Console.ReadLine();
+        }
+
+        private void OutputToConsole(string text, ConsoleColor color, Action<string> action)
         {
             var bufferColor = Console.ForegroundColor;
             Console.ForegroundColor = color;
