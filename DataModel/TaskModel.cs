@@ -7,8 +7,8 @@ namespace DataModel
     /// </summary>
     public class TaskModel
     {
-        private readonly string EMPTY_DESCRIPTION_EXCEPTION_MESSAGE = "Task description cannot be empty!";
-        private readonly string END_DATE_BEFORE_START_DATE_EXCEPTION_MESSAGE = "End date cannot be set before start date.";
+        private const string EmptyDescriptionExceptionMessage = "Task description cannot be empty!";
+        private const string EndDateBeforeStartDateExceptionMessage = "End date cannot be set before start date.";
 
         /// <summary>
         /// Defines description of a task.
@@ -21,11 +21,11 @@ namespace DataModel
             get => _description;
             set
             {
-                if (string.IsNullOrWhiteSpace(value)) { throw new ArgumentException(EMPTY_DESCRIPTION_EXCEPTION_MESSAGE); }
+                if (string.IsNullOrWhiteSpace(value)) { throw new ArgumentException(EmptyDescriptionExceptionMessage); }
                 else { _description = value; }
             }
         }
-        public string _description;
+        private string _description;
 
         /// <summary>
         /// Determines whether a task is of high importance.
@@ -88,7 +88,7 @@ namespace DataModel
                 }
                 else
                 {
-                    if (value < StartDate) { throw new ArgumentException(END_DATE_BEFORE_START_DATE_EXCEPTION_MESSAGE); }
+                    if (value < StartDate) { throw new ArgumentException(EndDateBeforeStartDateExceptionMessage); }
                     if (value == StartDate) { _endDate = null; }
                     else { _endDate = value; }
                 }
