@@ -6,6 +6,8 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+            ConsoleEx.Initialize();
+
             ConsoleEx.DrawAppHeader();
             ConsoleEx.PrintHelp();
 

@@ -9,6 +9,11 @@ namespace ConsoleUI
         private static Action<string> _writeAction = (string text) => Console.Write(text);
         private static Action<string> _writeLineAction = (string text) => Console.WriteLine(text);
 
+        internal static void Initialize()
+        {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+        }
+
         internal static void Write(string text, ConsoleColor color)
         {
             OutputToConsole(text, color, _writeAction);
