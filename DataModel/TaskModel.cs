@@ -1,11 +1,12 @@
 ﻿using System;
+using DataModel.Abstractions;
 
 namespace DataModel
 {
     /// <summary>
     /// Represents to-do task entity.
     /// </summary>
-    public class TaskModel
+    public class TaskModel : ITaskModel
     {
         private const string EmptyDescriptionExceptionMessage = "Task description cannot be empty!";
         private const string EndDateBeforeStartDateExceptionMessage = "End date cannot be set before start date.";
