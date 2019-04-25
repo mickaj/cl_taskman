@@ -6,7 +6,26 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            ConsoleEx.DrawAppHeader();
+            ConsoleEx.PrintHelp();
+
+            string command = string.Empty;
+            while (command.ToLower() != "exit")
+            {
+                command = Console.ReadLine();
+                switch (command.ToLower())
+                {
+                    case "clear":
+                        ConsoleEx.ClearConsole();
+                        break;
+                    case "help":
+                        ConsoleEx.PrintHelp();
+                        break;
+                    default:
+                        ConsoleEx.WriteLine("Unrecognized command", ConsoleColor.Red);
+                        break;
+                }
+            }
         }
     }
 }
