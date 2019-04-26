@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleUI.Commands;
+using System;
 
 namespace ConsoleUI
 {
@@ -6,7 +7,9 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            AppRunner app = new AppRunner(new ConsoleEx());
+            IConsole console = new ConsoleEx();
+            ICommandsCollection commandsCollection = new CommandsCollection(console);
+            AppRunner app = new AppRunner(console, commandsCollection);
 
             app.Start();
         }
