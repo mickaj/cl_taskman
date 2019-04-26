@@ -1,4 +1,6 @@
 ﻿using ConsoleUI.Commands;
+using DataModel;
+using DataModel.Abstractions;
 using System;
 
 namespace ConsoleUI
@@ -8,8 +10,11 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             IConsole console = new ConsoleEx();
-            ICommandsCollection commandsCollection = new CommandsCollection(console);
-            AppRunner app = new AppRunner(console, commandsCollection);
+            ITaskManager taskManager = new TaskManager();
+            ITaskBuilder taskBuilder = new TaskBuilder();
+            ICommandsCollection commandsCollection = new CommandsCollection(console, taskManager, taskBuilder);
+
+            AppRunner app = new AppRunner(console, commandsCollection, taskManager);
 
             app.Start();
         }

@@ -1,4 +1,5 @@
 ﻿using ConsoleUI.Commands;
+using DataModel.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,13 @@ namespace ConsoleUI
     {
         private readonly IConsole _console;
         private readonly ICommandsCollection _commands;
+        private readonly ITaskManager _taskManager;
 
-        internal AppRunner(IConsole console, ICommandsCollection commands)
+        internal AppRunner(IConsole console, ICommandsCollection commands, ITaskManager taskManager)
         {
             _console = console;
             _commands = commands;
+            _taskManager = taskManager;
         }
 
         internal void Start()

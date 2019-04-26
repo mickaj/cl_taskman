@@ -121,10 +121,9 @@ namespace DataModel
         /// <param name="description">Description string of a task.</param>
         /// <param name="startDate">Start date of a task</param>
         /// <param name="isImportant">Importance flag</param>
-        public TaskModel(string description, DateTime startDate, bool isImportant = false)
+        public TaskModel(string name, string description, DateTime startDate, bool isImportant = false)
         {
-            DateTime endDate = startDate;
-            InitializeProperties(description, startDate, endDate, isImportant);
+            InitializeProperties(name, description, startDate, startDate, isImportant);
         }
 
         /// <summary>
@@ -134,17 +133,19 @@ namespace DataModel
         /// <param name="startDate">Start date of a task</param>
         /// <param name="endDate">End date of a task</param>
         /// <param name="isImportant">Importance flag</param>
-        public TaskModel(string description, DateTime startDate, DateTime endDate, bool isImportant = false)
+        public TaskModel(string name, string description, DateTime startDate, DateTime endDate, bool isImportant = false)
         {
-            InitializeProperties(description, startDate, endDate, isImportant);
+            InitializeProperties(name, description, startDate, endDate, isImportant);
         }
 
-        private void InitializeProperties(string description, DateTime startDate, DateTime endDate, bool isImporant = false)
+        private void InitializeProperties(string name, string description, DateTime startDate, DateTime endDate, bool isImporant = false)
         {
+            Name = name;
             Description = description;
             StartDate = startDate;
             EndDate = endDate;
             Important = isImporant;
+            if(startDate == endDate) { AllDay = true; }
         }
     }
 }
