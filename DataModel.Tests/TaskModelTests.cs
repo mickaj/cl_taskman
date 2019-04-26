@@ -29,9 +29,9 @@ namespace DataModel.Tests
         public void SetStartDateAfterEnd()
         {
             TaskModel tm = new TaskModel(exampleDescription, date2010, date2012);
-            TimeSpan span = tm.EndDate.Value - tm.StartDate;
+            TimeSpan span = tm.EndDate - tm.StartDate;
             tm.StartDate = date2014;
-            TimeSpan spanAfterUpdate = tm.EndDate.Value - tm.StartDate;
+            TimeSpan spanAfterUpdate = tm.EndDate - tm.StartDate;
             Assert.Equal(span, spanAfterUpdate);
         }
 
@@ -40,7 +40,7 @@ namespace DataModel.Tests
         {
             TaskModel tm = new TaskModel(exampleDescription, date2010, date2012);
             Assert.False(tm.AllDay);
-            tm.StartDate = tm.EndDate.Value;
+            tm.StartDate = tm.EndDate;
             Assert.True(tm.AllDay);
         }
 

@@ -6,14 +6,13 @@ namespace DataModel.Abstractions
 {
     public interface ITaskModel
     {
+        string Name { get; set; }
         string Description { get; set; }
 
         bool Important { get; set; }
-        bool AllDay { get; }
+        bool AllDay { get; set; }
 
         DateTime StartDate { get; set; }
-        DateTime? EndDate { get; set; }
-
-        void SetAllDay();
+        DateTime EndDate { get; set; }
     }
 }

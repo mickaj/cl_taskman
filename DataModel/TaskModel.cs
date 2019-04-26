@@ -8,8 +8,25 @@ namespace DataModel
     /// </summary>
     public class TaskModel : ITaskModel
     {
-        private const string EmptyDescriptionExceptionMessage = "Task description cannot be empty!";
+        private const string EmptyDescriptionExceptionMessage = "Task {0} cannot be empty!";
         private const string EndDateBeforeStartDateExceptionMessage = "End date cannot be set before start date.";
+
+        /// <summary>
+        /// Defines name of a task.
+        /// </summary>
+        /// <exception cref="ArgumentException">
+        /// Exception is thrown when attempted to set blank name.
+        /// </exception>
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value)) { throw new ArgumentException(string.Format(EmptyDescriptionExceptionMessage, "name")); }
+                else { _name = value; }
+            }
+        }
+        private string _name;
 
         /// <summary>
         /// Defines description of a task.
@@ -22,7 +39,7 @@ namespace DataModel
             get => _description;
             set
             {
-                if (string.IsNullOrWhiteSpace(value)) { throw new ArgumentException(EmptyDescriptionExceptionMessage); }
+                if (string.IsNullOrWhiteSpace(value)) { throw new ArgumentException(string.Format(EmptyDescriptionExceptionMessage, "description")); }
                 else { _description = value; }
             }
         }
@@ -32,6 +49,11 @@ namespace DataModel
         /// Determines whether a task is of high importance.
         /// </summary>
         public bool Important { get; set; } = false;
+
+        /// <summary>
+        /// Determines whether a task is assigned for whole day.
+        /// </summary>
+        public bool AllDay { get; set; } = false;
 
         /// <summary>
         /// Defines start date of a task.
@@ -45,26 +67,19 @@ namespace DataModel
             get => _startDate;
             set
             {
-                if (EndDate.HasValue)
+                if (EndDate == value)
                 {
-                    if (EndDate == value)
-                    {
-                        EndDate = null;
-                        _startDate = value;
-                    }
-                    if (EndDate > value)
-                    {
-                        _startDate = value;
-                    }
-                    if (EndDate < value)
-                    {
-                        TimeSpan diff = value - EndDate.Value;
-                        EndDate = value + diff - new TimeSpan(1, 0, 0, 0);
-                        _startDate = value;
-                    }
+                    AllDay = true;
+                    _startDate = value;
                 }
-                else
+                if (EndDate > value)
                 {
+                    _startDate = value;
+                }
+                if (EndDate < value)
+                {
+                    TimeSpan diff = value - EndDate;
+                    EndDate = value + diff - new TimeSpan(1, 0, 0, 0);
                     _startDate = value;
                 }
             }
@@ -78,33 +93,27 @@ namespace DataModel
         /// <exception cref="ArgumentException">
         /// Exception is thrown when attempted to set end date current before start date.
         /// </exception>
-        public DateTime? EndDate
+        public DateTime EndDate
         {
-            get => _endDate;
+            get
+            {
+                if(AllDay)
+                {
+                    return new DateTime(StartDate.Year, StartDate.Month, StartDate.Day, 23, 59, 59);
+                }
+                else { return _endDate; }
+            }
             set
             {
-                if (value == null)
-                {
-                    _endDate = value;
-                }
+                if (value < StartDate) { throw new ArgumentException(EndDateBeforeStartDateExceptionMessage); }
                 else
                 {
-                    if (value < StartDate) { throw new ArgumentException(EndDateBeforeStartDateExceptionMessage); }
-                    if (value == StartDate) { _endDate = null; }
-                    else { _endDate = value; }
+                    if (value == StartDate) { AllDay = true; }
+                    _endDate = value;
                 }
             }
         }
-        private DateTime? _endDate;
-
-        /// <summary>
-        /// Checks if a task is set for all day.
-        /// A task is set for all day if EndDate is not set (null).
-        /// </summary>
-        public bool AllDay
-        {
-            get => !EndDate.HasValue;
-        }
+        private DateTime _endDate;
 
         /// <summary>
         /// Sets up new all day task.
@@ -114,7 +123,8 @@ namespace DataModel
         /// <param name="isImportant">Importance flag</param>
         public TaskModel(string description, DateTime startDate, bool isImportant = false)
         {
-            InitializeProperties(description, startDate, null, isImportant);
+            DateTime endDate = startDate;
+            InitializeProperties(description, startDate, endDate, isImportant);
         }
 
         /// <summary>
@@ -129,20 +139,12 @@ namespace DataModel
             InitializeProperties(description, startDate, endDate, isImportant);
         }
 
-        private void InitializeProperties(string description, DateTime startDate, DateTime? endDate, bool isImporant = false)
+        private void InitializeProperties(string description, DateTime startDate, DateTime endDate, bool isImporant = false)
         {
             Description = description;
             StartDate = startDate;
             EndDate = endDate;
             Important = isImporant;
-        }
-
-        /// <summary>
-        /// Sets a task as all-day by clearing EndDate value.
-        /// </summary>
-        public void SetAllDay()
-        {
-            EndDate = null;
         }
     }
 }
