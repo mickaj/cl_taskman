@@ -13,6 +13,8 @@ namespace DataModel
 
         private List<ITaskModel> _tasks = new List<ITaskModel>();
 
+        public int TaskCount { get => _tasks.Count; }
+
         public TaskManager()
         {
         }
