@@ -16,7 +16,7 @@ namespace ConsoleUI.Commands
 
         private const string dateFormat = "dd-MM-yyyy hh:mm";
 
-        private const int maxDesc = 30;
+        private const int maxLength = 30;
 
         int _nameLength;
         int _descLength;
@@ -30,7 +30,7 @@ namespace ConsoleUI.Commands
         private readonly ITaskManager _taskManager;
 
         public ListTasksCommand(IConsole console, ITaskManager taskManager)
-            :base(console)
+            : base(console)
         {
             _taskManager = taskManager;
         }
@@ -38,7 +38,7 @@ namespace ConsoleUI.Commands
         public void Invoke()
         {
             PrintTableHeader();
-            if(_taskManager.TaskCount > 0) { PrintTasks(); }
+            if (_taskManager.TaskCount > 0) { PrintTasks(); }
             else { _console.WriteLine("list is empty...", ConsoleColor.DarkRed); }
             _console.Write("\n");
         }
@@ -51,27 +51,40 @@ namespace ConsoleUI.Commands
             _dateLength = dateFormat.Length;
             _allDayLength = allDayHeader.Length;
 
-            foreach(ITaskModel task in _taskManager.GetTasks())
+            foreach (ITaskModel task in _taskManager.GetTasks())
             {
-                if(task.Name.Length > _nameLength) { _nameLength = task.Name.Length; }
-                if(task.Description.Length > _descLength)
+                if (task.Name.Length > _descLength)
                 {
-                    if(task.Description.Length < maxDesc) { _descLength = task.Description.Length; }
-                    else { _descLength = maxDesc; }
+                    if (task.Name.Length < maxLength) { _nameLength = task.Name.Length; }
+                    else { _nameLength = maxLength; }
+                }
+
+                if (task.Description.Length > _descLength)
+                {
+                    if (task.Description.Length < maxLength) { _descLength = task.Description.Length; }
+                    else { _descLength = maxLength; }
                 }
             }
 
             int totalWidth = _nameLength + _descLength + _importanceLength + _dateLength * 2 + _allDayLength;
 
-            _console.WriteLine($"\n| {nameHeader.PadRight(_nameLength + 3)}| {descriptionHeader.PadRight(_descLength + 3)}| {importanceHeader.PadRight(_importanceLength + 3)}| {startDateHeader.PadRight(_dateLength + 1)}| {endDateHeader.PadRight(_dateLength + 1)}| {allDayHeader.PadRight(_allDayLength + 3)}|", ConsoleColor.Blue);
-            _console.WriteLine("-".PadRight(totalWidth+27, '-'), ConsoleColor.Blue);
+            _console.WriteLine($"\n| # | {nameHeader.PadRight(_nameLength + 3)}| {descriptionHeader.PadRight(_descLength + 3)}| {importanceHeader.PadRight(_importanceLength + 3)}| {startDateHeader.PadRight(_dateLength + 1)}| {endDateHeader.PadRight(_dateLength + 1)}| {allDayHeader.PadRight(_allDayLength + 3)}|", ConsoleColor.Blue);
+            _console.WriteLine("-".PadRight(totalWidth + 31, '-'), ConsoleColor.Blue);
         }
 
         private void PrintTasks()
         {
+            int i = 0;
             foreach (ITaskModel task in _taskManager.GetTasks())
             {
-                _console.WriteLine($"| {task.Name.PadRight(_nameLength + 3)}| {task.Description.Substring(0, task.Description.Length > maxDesc ? maxDesc : task.Description.Length - 1).PadRight(_descLength + 3)}| {task.Important.ToString().PadRight(_importanceLength + 3)}| {task.StartDate.ToString(dateFormat).PadRight(_dateLength + 1)}| {task.EndDate.ToString(dateFormat).PadRight(_dateLength + 1)}| {task.AllDay.ToString().PadRight(_allDayLength + 3)}|", ConsoleColor.Blue);
+                string name = task.Name.Substring(0, task.Name.Length > maxLength ? maxLength : task.Name.Length).PadRight(_nameLength + 3);
+                string desc = task.Description.Substring(0, task.Description.Length > maxLength ? maxLength : task.Description.Length).PadRight(_descLength + 3);
+                string important = task.Important.ToString().PadRight(_importanceLength + 3);
+                string startDate = task.StartDate.ToString(dateFormat).PadRight(_dateLength + 1);
+                string endDate = task.AllDay ? "- ".PadRight(_dateLength + 1) : task.EndDate.ToString(dateFormat).PadRight(_dateLength + 1);
+                string allDay = task.AllDay ? "v ".PadRight(_allDayLength + 3) : "".PadRight(_allDayLength + 3);
+
+                _console.WriteLine($"| {i++} | {name}| {desc}| {important}| {startDate}| {endDate}| {allDay}|", ConsoleColor.Blue);
             }
         }
     }
