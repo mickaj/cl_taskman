@@ -12,7 +12,7 @@ namespace ConsoleUI.Commands
         private const string dateFormat = "dd-MM-yyyy hh:mm";
 
         public string Name { get; } = "show";
-        public string HelpMessage { get; } = "Display all properties of a task sepcified by its index.\n* Usage: type command and hit press enter, you will be prompted for task's index.";
+        public string HelpMessage { get; } = "Display all properties of a task sepcified by its index.\n* Usage: type command and press enter, you will be prompted for task's index.";
 
         public ShowTaskCommand(IConsole console, ITaskManager taskManager)
             : base(console)
