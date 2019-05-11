@@ -13,7 +13,7 @@ namespace DataModel
             get => _name;
             set
             {
-                if (string.IsNullOrWhiteSpace(value)) { _name = $"task {DateTime.Now.Ticks}"; }
+                if (string.IsNullOrWhiteSpace(value)) { _name = $"{DateTime.Now.Ticks}"; }
                 else { _name = value; }
             }
         }
@@ -24,7 +24,7 @@ namespace DataModel
             get => _description;
             set
             {
-                if (string.IsNullOrWhiteSpace(value)) { _description = "something to do"; }
+                if (string.IsNullOrWhiteSpace(value)) { _description = "-"; }
                 else { _description = value; }
             }
         }
