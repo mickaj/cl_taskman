@@ -17,6 +17,7 @@ namespace ConsoleUI.Commands
             _commands.Add(new AddTaskCommand(console, taskManager, taskBuilder));
             _commands.Add(new ListTasksCommand(console, taskManager));
             _commands.Add(new ShowTaskCommand(console, taskManager));
+            _commands.Add(new EditTaskCommand(console, taskManager));
         }
 
         public IReadOnlyList<IUiCommand> Commands { get => _commands.AsReadOnly(); }
