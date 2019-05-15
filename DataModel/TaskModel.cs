@@ -61,7 +61,8 @@ namespace DataModel
             }
             set
             {
-                if (StartDate > value) { AllDay = true; }
+                if (StartDate >= value) { AllDay = true; }
+                else { AllDay = false; }
                 _endDate = value;
             }
         }
