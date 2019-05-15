@@ -11,5 +11,6 @@ namespace DataModel.Abstractions
 
         ITaskModel Parse(string input);
 
+        bool ReParse(string input, ITaskModel task);
     }
 }

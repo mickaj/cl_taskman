@@ -43,6 +43,32 @@ namespace DataModel
             return null;
         }
 
+        public bool ReParse(string input, ITaskModel task)
+        {
+            if(ValidateStringForReParse(input, out string[] separated))
+            {
+                if (separated.Length >= 1) { task.Name = separated[0] == "_" ? task.Name : separated[0]; }
+                if (separated.Length >= 2) { task.Description = separated[1] == "_" ? task.Description : separated[1]; }
+                if (separated.Length >= 3) { task.StartDate = separated[2] == "_" ? task.StartDate : DateTime.Parse(separated[2]); }
+
+                if (separated.Length >= 4)
+                {
+                    if (!string.IsNullOrWhiteSpace(separated[3]))
+                    {
+                        task.EndDate = separated[3] == "_" ? task.EndDate : DateTime.Parse(separated[3]);
+                    } else { task.AllDay = true; }
+                }
+
+                if (separated.Length >= 5 && separated[4] != "_")
+                {
+                    if (separated[4].ToLower() == "true") { task.Important = true; }
+                    else { task.Important = false; }
+                }
+                return true;
+            }
+            return false;
+        }
+
         private bool ValidateString(string input, out string[] output)
         {
             output = input.Split(';');
@@ -52,6 +78,24 @@ namespace DataModel
                 if (output.Length >= 4)
                 {
                     if (!string.IsNullOrWhiteSpace(output[3]) && !DateTime.TryParse(output[3], out _)) { return false; }
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private bool ValidateStringForReParse(string input, out string[] output)
+        {
+            output = input.Split(';');
+            if (output.Length >= 1 && output.Length <= 5)
+            {
+                if(output.Length >=3)
+                {
+                    if (!DateTime.TryParse(output[2], out _) && output[2] != "_") { return false; }
+                }
+                if (output.Length >= 4)
+                {
+                    if (!string.IsNullOrWhiteSpace(output[3]) && (!DateTime.TryParse(output[3], out _) && (output[3] != "_"))) { return false; }
                 }
                 return true;
             }
