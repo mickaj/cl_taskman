@@ -9,7 +9,7 @@ namespace ConsoleUI.Commands
     {
         protected List<IUiCommand> _commands = new List<IUiCommand>();
 
-        public CommandsCollection(IConsole console, ITaskManager taskManager, ITaskBuilder taskBuilder)
+        public CommandsCollection(IConsole console, ITaskManager taskManager, ITaskBuilder taskBuilder, IConverter converter)
         {
             _commands.Add(new DrawHeaderCommand(console));
             _commands.Add(new ClearCommand(console, _commands[0] as DrawHeaderCommand));
@@ -18,6 +18,7 @@ namespace ConsoleUI.Commands
             _commands.Add(new ListTasksCommand(console, taskManager));
             _commands.Add(new ShowTaskCommand(console, taskManager));
             _commands.Add(new EditTaskCommand(console, taskManager, taskBuilder));
+            _commands.Add(new SaveListCommand(console, taskManager, converter));
         }
 
         public IReadOnlyList<IUiCommand> Commands { get => _commands.AsReadOnly(); }
