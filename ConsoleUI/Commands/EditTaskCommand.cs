@@ -34,15 +34,20 @@ namespace ConsoleUI.Commands
                     _console.WriteLine($"{task.Name};{task.Description};{task.StartDate.ToString(dateFormat)};{task.EndDate.ToString(dateFormat)};{task.Important.ToString().ToLower()}", ConsoleColor.Blue);
                     _console.Write("name;description;start date;end date;importance: ", ConsoleColor.Green);
                     string readString = _console.ReadLine();
-                    if(_taskBuilder.ReParse(readString, task)) { _console.WriteLine("task updated"); }
-                    else { _console.WriteLine("update failed"); }
+                    if(_taskBuilder.ReParse(readString, task))
+                    {
+                        _console.Write("Task ", ConsoleColor.Green);
+                        _console.Write(task.Name, ConsoleColor.Blue);
+                        _console.WriteLine("' has been updated", ConsoleColor.Green);
+                    }
+                    else { _console.WriteLine("Incorrect update string format. Update failed.", ConsoleColor.Red); }
                 }
                 catch
                 {
-                    _console.WriteLine("task with given id does not exist!", ConsoleColor.Red);
+                    _console.WriteLine("Task with given id does not exist!", ConsoleColor.Red);
                 }
             }
-            else { _console.WriteLine("index must be a number!", ConsoleColor.Red); }
+            else { _console.WriteLine("Index must be a number!", ConsoleColor.Red); }
         }
     }
 }
