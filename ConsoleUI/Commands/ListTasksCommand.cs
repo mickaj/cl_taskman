@@ -68,14 +68,19 @@ namespace ConsoleUI.Commands
 
             int totalWidth = _nameLength + _descLength + _importanceLength + _dateLength * 2 + _allDayLength;
 
-            _console.WriteLine($"\n| # | {nameHeader.PadRight(_nameLength + 3)}| {descriptionHeader.PadRight(_descLength + 3)}| {importanceHeader.PadRight(_importanceLength + 3)}| {startDateHeader.PadRight(_dateLength + 1)}| {endDateHeader.PadRight(_dateLength + 1)}| {allDayHeader.PadRight(_allDayLength + 3)}|", ConsoleColor.Blue);
+            string indexHeader = " #".PadRight(_taskManager.TaskCount.ToString().Length);
+            
+            _console.WriteLine($"\n| {indexHeader} | {nameHeader.PadRight(_nameLength + 3)}| {descriptionHeader.PadRight(_descLength + 3)}| {importanceHeader.PadRight(_importanceLength + 3)}| {startDateHeader.PadRight(_dateLength + 1)}| {endDateHeader.PadRight(_dateLength + 1)}| {allDayHeader.PadRight(_allDayLength + 3)}|", ConsoleColor.Blue);
             _console.WriteLine("-".PadRight(totalWidth + 31, '-'), ConsoleColor.Blue);
         }
 
         private void PrintTasks()
         {
             int i = 0;
-            foreach (ITaskModel task in _taskManager.GetTasks())
+            var tasks = _taskManager.GetTasks();
+            int idColumnPadding = _taskManager.TaskCount.ToString().Length;
+
+            foreach (ITaskModel task in tasks)
             {
                 string name = task.Name.Substring(0, task.Name.Length > maxLength ? maxLength : task.Name.Length).PadRight(_nameLength + 3);
                 string desc = task.Description.Substring(0, task.Description.Length > maxLength ? maxLength : task.Description.Length).PadRight(_descLength + 3);
@@ -84,7 +89,7 @@ namespace ConsoleUI.Commands
                 string endDate = task.AllDay ? "- ".PadRight(_dateLength + 1) : task.EndDate.ToString(dateFormat).PadRight(_dateLength + 1);
                 string allDay = task.AllDay ? "v ".PadRight(_allDayLength + 3) : "".PadRight(_allDayLength + 3);
 
-                _console.WriteLine($"| {i++} | {name}| {desc}| {important}| {startDate}| {endDate}| {allDay}|", ConsoleColor.Blue);
+                _console.WriteLine($"| {i++.ToString().PadRight(idColumnPadding)} | {name}| {desc}| {important}| {startDate}| {endDate}| {allDay}|", ConsoleColor.Blue);
             }
         }
     }

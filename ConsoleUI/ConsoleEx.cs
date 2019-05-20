@@ -8,9 +8,10 @@ namespace ConsoleUI
         private Action<string> _writeAction = (string text) => Console.Write(text);
         private Action<string> _writeLineAction = (string text) => Console.WriteLine(text);
 
-        internal ConsoleEx()
+        internal ConsoleEx(string title = "")
         {
             Console.OutputEncoding = Encoding.UTF8;
+            if (!string.IsNullOrWhiteSpace(title)) { Console.Title = title; } 
         }
 
         public void Write(string text)

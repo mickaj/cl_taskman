@@ -9,7 +9,7 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            IConsole console = new ConsoleEx();
+            IConsole console = new ConsoleEx("cl-mickaj console task manager");
             ITaskManager taskManager = new TaskManager();
             ITaskBuilder taskBuilder = new TaskBuilder();
             IConverter converter = new CsvConverter(taskBuilder);
