@@ -12,7 +12,7 @@ namespace ConsoleUI
             IConsole console = new ConsoleEx();
             ITaskManager taskManager = new TaskManager();
             ITaskBuilder taskBuilder = new TaskBuilder();
-            IConverter converter = new CsvConverter();
+            IConverter converter = new CsvConverter(taskBuilder);
             ICommandsCollection commandsCollection = new CommandsCollection(console, taskManager, taskBuilder, converter);
 
             AppRunner app = new AppRunner(console, commandsCollection, taskManager);

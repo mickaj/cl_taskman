@@ -7,6 +7,13 @@ namespace DataModel
 {
     public class CsvConverter : IConverter
     {
+        private ITaskBuilder _taskBuilder;
+
+        public CsvConverter(ITaskBuilder taskBuilder)
+        {
+            _taskBuilder = taskBuilder;
+        }
+
         public string[] ToStringArray(IEnumerable<ITaskModel> source)
         {
             List<string> result = new List<string>();
@@ -17,6 +24,21 @@ namespace DataModel
                 result.Add(sb.ToString());
             }
             return result.ToArray();
+        }
+
+        public IEnumerable<ITaskModel> FromStringArray(string[] source)
+        {
+            List<ITaskModel> result = new List<ITaskModel>();
+            foreach(string taskString in source)
+            {
+                string[] splitString = taskString.Split(',');
+                if(splitString.Length == 5)
+                {
+                    var task =_taskBuilder.BuildTask(splitString[0].Trim('"'), splitString[1].Trim('"'), DateTime.Parse(splitString[2].Trim('"')), DateTime.Parse(splitString[3].Trim('"')), splitString[4].ToLower() == "true" ? true : false);
+                    result.Add(task);
+                }                
+            }
+            return result;
         }
 
         private string[] BuildPropertiesStrings(ITaskModel task)

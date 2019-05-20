@@ -30,6 +30,20 @@ namespace DataModel
             else { _tasks.Add(task); }
         }
 
+        public int AddTasks(IEnumerable<ITaskModel> tasks)
+        {
+            int count = 0;
+            foreach (ITaskModel task in tasks)
+            {
+                if(!_tasks.Contains(task))
+                {
+                    _tasks.Add(task);
+                    count++;
+                }
+            }
+            return count;
+        }
+
         public void RemoveTask(ITaskModel task)
         {
             if (_tasks.Contains(task)) { _tasks.Remove(task); }

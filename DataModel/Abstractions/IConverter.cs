@@ -7,5 +7,6 @@ namespace DataModel.Abstractions
     public interface IConverter
     {
         string[] ToStringArray(IEnumerable<ITaskModel> source);
+        IEnumerable<ITaskModel> FromStringArray(string[] source);
     }
 }
