@@ -15,6 +15,7 @@ namespace ConsoleUI.Commands
             _commands.Add(new ClearCommand(console, _commands[0] as DrawHeaderCommand));
             _commands.Add(new HelpCommand(console, this));
             _commands.Add(new AddTaskCommand(console, taskManager, taskBuilder));
+            _commands.Add(new RemoveTaskCommand(console, taskManager));
             _commands.Add(new ListTasksCommand(console, taskManager));
             _commands.Add(new ShowTaskCommand(console, taskManager));
             _commands.Add(new EditTaskCommand(console, taskManager, taskBuilder));
