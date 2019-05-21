@@ -25,19 +25,12 @@ namespace DataModel
                 DateTime startDate = DateTime.Parse(separated[2]);
 
                 DateTime? endDate = null;
-                if (separated.Length >= 4)
-                {
-                    if (!string.IsNullOrWhiteSpace(separated[3])) { endDate = DateTime.Parse(separated[3]); }
-                }
+                if (separated.Length >= 4 && !string.IsNullOrWhiteSpace(separated[3])) { endDate = DateTime.Parse(separated[3]); }
 
-                ITaskModel newTask;
-                if (endDate.HasValue) { newTask = BuildTask(name, desc, startDate, endDate.Value); }
-                else { newTask = BuildTask(name, desc, startDate); }
+                bool isImportant = false;
+                if (separated.Length >= 5 && separated[4].ToLower() == "true") { isImportant = true; }
 
-                if (separated.Length >= 5)
-                {
-                    if (separated[4].ToLower() == "true") { newTask.Important = true; }
-                }
+                ITaskModel newTask = endDate.HasValue ? BuildTask(name, desc, startDate, endDate.Value, isImportant) : BuildTask(name, desc, startDate, isImportant);
                 return newTask;
             }
             return null;
@@ -62,8 +55,7 @@ namespace DataModel
 
                 if (separated.Length >= 5 && separated[4] != "_")
                 {
-                    if (separated[4].ToLower() == "true") { task.Important = true; }
-                    else { task.Important = false; }
+                    task.Important = separated[4].ToLower() == "true" ? true : false;
                 }
                 return true;
             }
