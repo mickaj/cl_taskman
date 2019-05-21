@@ -45,7 +45,7 @@ namespace DataModel
 
         public bool ReParse(string input, ITaskModel task)
         {
-            if(ValidateStringForReParse(input, out string[] separated))
+            if (ValidateStringForReParse(input, out string[] separated))
             {
                 if (separated.Length >= 1) { task.Name = separated[0] == "_" ? task.Name : separated[0]; }
                 if (separated.Length >= 2) { task.Description = separated[1] == "_" ? task.Description : separated[1]; }
@@ -56,7 +56,8 @@ namespace DataModel
                     if (!string.IsNullOrWhiteSpace(separated[3]))
                     {
                         task.EndDate = separated[3] == "_" ? task.EndDate : DateTime.Parse(separated[3]);
-                    } else { task.AllDay = true; }
+                    }
+                    else { task.AllDay = true; }
                 }
 
                 if (separated.Length >= 5 && separated[4] != "_")
@@ -72,34 +73,20 @@ namespace DataModel
         private bool ValidateString(string input, out string[] output)
         {
             output = input.Split(';');
-            if (output.Length >= 3 && output.Length <= 5)
-            {
-                if (!DateTime.TryParse(output[2], out _)) { return false; }
-                if (output.Length >= 4)
-                {
-                    if (!string.IsNullOrWhiteSpace(output[3]) && !DateTime.TryParse(output[3], out _)) { return false; }
-                }
-                return true;
-            }
-            return false;
+            if (output.Length < 3 || output.Length > 5) { return false; }
+            if (!DateTime.TryParse(output[2], out _)) { return false; }
+            if ((output.Length >= 4) && !(string.IsNullOrWhiteSpace(output[3]) || DateTime.TryParse(output[3], out _))) { return false; }
+            return true;
+
         }
 
         private bool ValidateStringForReParse(string input, out string[] output)
         {
             output = input.Split(';');
-            if (output.Length >= 1 && output.Length <= 5)
-            {
-                if(output.Length >=3)
-                {
-                    if (!DateTime.TryParse(output[2], out _) && output[2] != "_") { return false; }
-                }
-                if (output.Length >= 4)
-                {
-                    if (!string.IsNullOrWhiteSpace(output[3]) && (!DateTime.TryParse(output[3], out _) && (output[3] != "_"))) { return false; }
-                }
-                return true;
-            }
-            return false;
+            if (output.Length < 1 || output.Length > 5) { return false; }
+            if ((output.Length >= 3) && !(DateTime.TryParse(output[2], out _) || output[2] == "_")) { return false; }
+            if ((output.Length >= 4) && !(string.IsNullOrWhiteSpace(output[3]) || DateTime.TryParse(output[3], out _) || output[3] == "_")) { return false; }
+            return true;
         }
     }
 }
