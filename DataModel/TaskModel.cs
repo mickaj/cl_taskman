@@ -98,7 +98,13 @@ namespace DataModel
             StartDate = startDate;
             EndDate = endDate;
             Important = isImporant;
-            if (startDate == endDate) { AllDay = true; }
+            AllDay = ShouldBeAllDay(StartDate, EndDate);
+        }
+
+        private bool ShouldBeAllDay(DateTime start, DateTime end)
+        {
+            if(start.ToShortDateString() == end.ToShortDateString() && end.Hour ==23 && end.Minute == 59) { return true; }
+            return false;
         }
     }
 }
