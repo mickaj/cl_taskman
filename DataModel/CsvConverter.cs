@@ -31,10 +31,11 @@ namespace DataModel
             List<ITaskModel> result = new List<ITaskModel>();
             foreach(string taskString in source)
             {
-                string[] splitString = taskString.Split(',');
+                var splitString = SplitAndTrim(taskString);
+
                 if(splitString.Length == 5)
                 {
-                    var task =_taskBuilder.BuildTask(splitString[0].Trim('"'), splitString[1].Trim('"'), DateTime.Parse(splitString[2].Trim('"')), DateTime.Parse(splitString[3].Trim('"')), splitString[4].ToLower() == "true" ? true : false);
+                    var task =_taskBuilder.BuildTask(splitString[0], splitString[1], DateTime.Parse(splitString[2]), DateTime.Parse(splitString[3]), splitString[4].ToLower() == "true" ? true : false);
                     result.Add(task);
                 }                
             }
@@ -51,6 +52,16 @@ namespace DataModel
                $"\u0022{task.EndDate.ToString()}\u0022",
                $"\u0022{task.Important.ToString()}\u0022"
            };
+        }
+
+        private string[] SplitAndTrim(string source)
+        {
+            List<string> split = new List<string>(source.Split(','));
+            for (int i = 0; i < split.Count; i++)
+            {
+                split[i] = split[i].Trim('"');
+            }
+            return split.ToArray();
         }
     }
 }
