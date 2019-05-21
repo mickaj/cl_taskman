@@ -10,8 +10,6 @@ namespace ConsoleUI.Commands
         private readonly ITaskManager _taskManager;
         private readonly ITaskBuilder _taskBuilder;
 
-        private const string dateFormat = "dd-MM-yyyy HH:mm";
-
         public string Name { get; } = "edit";
         public string HelpMessage { get; } = "Allows to edit a task";
 
@@ -31,7 +29,7 @@ namespace ConsoleUI.Commands
                 try
                 {
                     var task = _taskManager.GetTask(id);
-                    _console.WriteLine($"{task.Name};{task.Description};{task.StartDate.ToString(dateFormat)};{task.EndDate.ToString(dateFormat)};{task.Important.ToString().ToLower()}", ConsoleColor.Blue);
+                    _console.WriteLine($"{task.Name};{task.Description};{task.StartDate.ToString(_dateFormat)};{task.EndDate.ToString(_dateFormat)};{task.Important.ToString().ToLower()}", ConsoleColor.Blue);
                     _console.Write("name;description;start date;end date;importance: ", ConsoleColor.Green);
                     string readString = _console.ReadLine();
                     if(_taskBuilder.ReParse(readString, task))

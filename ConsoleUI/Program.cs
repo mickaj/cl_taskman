@@ -15,7 +15,7 @@ namespace ConsoleUI
             IConverter converter = new CsvConverter(taskBuilder);
             ICommandsCollection commandsCollection = new CommandsCollection(console, taskManager, taskBuilder, converter);
 
-            AppRunner app = new AppRunner(console, commandsCollection, taskManager);
+            AppRunner app = new AppRunner(console, commandsCollection);
 
             app.Start();
         }

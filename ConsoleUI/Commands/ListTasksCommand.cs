@@ -14,8 +14,6 @@ namespace ConsoleUI.Commands
         private const string endDateHeader = "Ends";
         private const string allDayHeader = "All day";
 
-        private const string dateFormat = "dd-MM-yyyy hh:mm";
-
         private const int maxLength = 30;
 
         int _nameLength;
@@ -48,7 +46,7 @@ namespace ConsoleUI.Commands
             _nameLength = nameHeader.Length;
             _descLength = descriptionHeader.Length;
             _importanceLength = importanceHeader.Length;
-            _dateLength = dateFormat.Length;
+            _dateLength = _dateFormat.Length;
             _allDayLength = allDayHeader.Length;
 
             foreach (ITaskModel task in _taskManager.GetTasks())
@@ -85,8 +83,8 @@ namespace ConsoleUI.Commands
                 string name = task.Name.Substring(0, task.Name.Length > maxLength ? maxLength : task.Name.Length).PadRight(_nameLength + 3);
                 string desc = task.Description.Substring(0, task.Description.Length > maxLength ? maxLength : task.Description.Length).PadRight(_descLength + 3);
                 string important = task.Important.ToString().PadRight(_importanceLength + 3);
-                string startDate = task.StartDate.ToString(dateFormat).PadRight(_dateLength + 1);
-                string endDate = task.AllDay ? "- ".PadRight(_dateLength + 1) : task.EndDate.ToString(dateFormat).PadRight(_dateLength + 1);
+                string startDate = task.StartDate.ToString(_dateFormat).PadRight(_dateLength + 1);
+                string endDate = task.AllDay ? "- ".PadRight(_dateLength + 1) : task.EndDate.ToString(_dateFormat).PadRight(_dateLength + 1);
                 string allDay = task.AllDay ? "v ".PadRight(_allDayLength + 3) : "".PadRight(_allDayLength + 3);
 
                 _console.WriteLine($"| {i++.ToString().PadRight(idColumnPadding)} | {name}| {desc}| {important}| {startDate}| {endDate}| {allDay}|", ConsoleColor.Blue);

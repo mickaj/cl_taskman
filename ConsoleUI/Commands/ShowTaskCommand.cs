@@ -9,8 +9,6 @@ namespace ConsoleUI.Commands
     {
         private readonly ITaskManager _taskManager;
 
-        private const string dateFormat = "dd-MM-yyyy hh:mm";
-
         public string Name { get; } = "show";
         public string HelpMessage { get; } = "Display all properties of a task sepcified by its index.\n* Usage: type command and press enter, you will be prompted for task's index.";
 
@@ -37,9 +35,9 @@ namespace ConsoleUI.Commands
                     _console.Write("Important: ", ConsoleColor.Blue);
                     _console.WriteLine(task.Important.ToString(), task.Important ? ConsoleColor.Red : ConsoleColor.White);
                     _console.Write("Start date: ", ConsoleColor.Blue);
-                    _console.WriteLine(task.StartDate.ToString(dateFormat));
+                    _console.WriteLine(task.StartDate.ToString(_dateFormat));
                     _console.Write("End date: ", ConsoleColor.Blue);
-                    _console.WriteLine(task.EndDate.ToString(dateFormat));
+                    _console.WriteLine(task.EndDate.ToString(_dateFormat));
                     _console.Write("All day: ", ConsoleColor.Blue);
                     _console.WriteLine(task.AllDay.ToString() + "\n");
                 }
