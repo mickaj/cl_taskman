@@ -4,11 +4,11 @@ using System.Text;
 
 namespace ConsoleUI.Commands
 {
-    public abstract class UiCommand
+    public abstract class UiCommandBase
     {
         protected readonly IConsole _console;
 
-        public UiCommand(IConsole console)
+        public UiCommandBase(IConsole console)
         {
             _console = console;
         }

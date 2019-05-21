@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ConsoleUI.Commands
 {
-    public class ClearCommand : UiCommand, IUiCommand
+    public class ClearCommand : UiCommandBase, IUiCommand
     {
         private readonly DrawHeaderCommand _drawHeaderCommand;
         public string Name { get; } = "clear";

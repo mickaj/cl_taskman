@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ConsoleUI.Commands
 {
-    public class ShowTaskCommand : UiCommand, IUiCommand
+    public class ShowTaskCommand : UiCommandBase, IUiCommand
     {
         private readonly ITaskManager _taskManager;
 

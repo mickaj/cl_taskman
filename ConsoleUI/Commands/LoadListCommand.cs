@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ConsoleUI.Commands
 {
-    public class LoadListCommand : UiCommand, IUiCommand
+    public class LoadListCommand : UiCommandBase, IUiCommand
     {
         private readonly ITaskManager _taskManager;
         private readonly IConverter _converter;

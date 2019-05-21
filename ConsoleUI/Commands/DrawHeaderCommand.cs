@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ConsoleUI.Commands
 {
-    public class DrawHeaderCommand : UiCommand, IUiCommand
+    public class DrawHeaderCommand : UiCommandBase, IUiCommand
     {
         public string Name { get; } = "header";
         public string HelpMessage { get; } = "Re-draws application header";

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ConsoleUI.Commands
 {
-    public class HelpCommand : UiCommand, IUiCommand
+    public class HelpCommand : UiCommandBase, IUiCommand
     {
         private ICommandsCollection _commands;
         public string Name { get; } = "help";

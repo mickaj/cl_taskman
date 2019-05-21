@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ConsoleUI.Commands
 {
-    public class ListTasksCommand : UiCommand, IUiCommand
+    public class ListTasksCommand : UiCommandBase, IUiCommand
     {
         private const string nameHeader = "Task name";
         private const string descriptionHeader = "Description";
