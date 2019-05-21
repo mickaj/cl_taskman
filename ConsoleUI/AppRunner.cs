@@ -11,13 +11,11 @@ namespace ConsoleUI
     {
         private readonly IConsole _console;
         private readonly ICommandsCollection _commands;
-        private readonly ITaskManager _taskManager;
 
-        internal AppRunner(IConsole console, ICommandsCollection commands, ITaskManager taskManager)
+        internal AppRunner(IConsole console, ICommandsCollection commands)
         {
             _console = console;
             _commands = commands;
-            _taskManager = taskManager;
         }
 
         internal void Start()
