@@ -35,7 +35,13 @@ namespace DataModel
 
                 if(splitString.Length == 5)
                 {
-                    var task =_taskBuilder.BuildTask(splitString[0], splitString[1], DateTime.Parse(splitString[2]), DateTime.Parse(splitString[3]), splitString[4].ToLower() == "true" ? true : false);
+                    string name = splitString[0];
+                    string desc = splitString[1];
+                    DateTime startDate = DateTime.Parse(splitString[2]);
+                    DateTime endDate = DateTime.Parse(splitString[3]);
+                    bool isImportant = splitString[4].ToLower() == "true" ? true : false;
+
+                    var task =_taskBuilder.BuildTask(name, desc, startDate, endDate, isImportant);
                     result.Add(task);
                 }                
             }
