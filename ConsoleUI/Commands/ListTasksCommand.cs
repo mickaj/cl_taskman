@@ -29,7 +29,6 @@ namespace ConsoleUI.Commands
                     _console.WriteLine(s, ConsoleColor.Blue);
                 }
             }
-            _console.Write("\n");
         }
     }
 }
