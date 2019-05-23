@@ -91,7 +91,7 @@ namespace ConsoleUI.Commands
             string endDate = task.AllDay ? " -".PadRight(_dateLength) : task.EndDate.ToString(_dateFormat);
             string allDay = task.AllDay ? " v".PadRight(_allDayLength) : "".PadRight(_allDayLength);
 
-            return $"| {id} | {name} | {desc} | {important} | {startDate} | {endDate} | {allDay} |";
+            return $"| {id} | {name} | {desc} | {important} | {startDate} | {endDate} | {allDay}  |";
         }
 
         private void SetDefaultLengths()
