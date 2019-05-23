@@ -33,7 +33,8 @@ namespace ConsoleUI.Commands
             }
             catch (Exception e)
             {
-                _console.WriteLine($"Loading failed. Reason: {e.Message}");
+                _console.WriteLine($"Loading failed. Reason: {e.Message}",ConsoleColor.Red);
+                return;
             }
             _console.Write("File '", ConsoleColor.Green);
             _console.Write(path, ConsoleColor.Blue);
