@@ -30,6 +30,7 @@ namespace ConsoleUI
             string commandString = string.Empty;
             while (commandString.ToLower() != "exit")
             {
+                _console.Write("command: ", ConsoleColor.Green);
                 commandString = _console.ReadLine().ToLower();
                 if (_commands.Commands.Any(command => command.Name == commandString)) { _commands.Commands.First(command => command.Name == commandString).Invoke(); }
                 else { _console.WriteLine("Unrecognized command", ConsoleColor.Red); }
